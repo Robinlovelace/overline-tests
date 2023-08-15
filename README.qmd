@@ -147,6 +147,12 @@ sl_df_expanded = sl_df[c3[, "L1"], ]
 ```
 
 ```{r}
+knitr::opts_chunk$set(
+  eval = FALSE
+)  
+```
+
+```{r}
 sl_wide <- cbind(c3_new, sl_df_expanded)
 bench::mark(check = FALSE,
   dplyr = dplyr::group_by_at(sl_wide, c("1", "2", "3", "4")) |>
