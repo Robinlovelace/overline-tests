@@ -59,6 +59,49 @@ sl = sf::st_sf(
   )
 )
 plot(sl)
+sl_overline = stplanr::overline(sl, attrib = "foot")
+sl_overline
+plot(sl_overline)
+```
+
+
+We can represent this in GeoPandas as follows:
+
+```{python}
+import geopandas as gpd
+from shapely.geometry import LineString
+
+sl = gpd.GeoDataFrame(
+    {
+        "id": ["a", "b"],
+        "value": [1, 2]
+    },
+    geometry = [
+        LineString([(0, 0), (1, 1), (2, 2)]),
+        LineString([(0, 1), (1, 1), (2, 2)])
+    ]
+)
+
+# plot with values:
+sl.plot(column = "value")
+# The output should be along the lines of:
+sl_overline = gpd.GeoDataFrame(
+    {
+        "value": [1, 2, 3]
+    },
+    geometry = [
+        LineString([(0, 0), (1, 1)]),
+        LineString([(0, 1), (1, 1)]),
+        LineString([(1, 1), (2, 2)])
+    ]
+)
+sl_overline.plot(column = "value")
+```
+
+```{r}
+```
+
+```{r}
 ```
 
 `sfheaders` is x faster:
