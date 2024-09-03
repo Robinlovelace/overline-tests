@@ -2,7 +2,7 @@
 format: gfm
 ---
 
-The aim of this repo is to test functionality in the `overline` function and try to speed-it up.
+The aim of this repo is to test functionality in the `overline` function and speed-it up.
 
 ```{r}
 #| include: false
@@ -104,33 +104,37 @@ sl_overline.plot(column = "value")
 ```{r}
 ```
 
-`sfheaders` is x faster:
+`sfheaders` is 2x faster:
 
 ```{r}
+sl_geos = geos::as_geos_geometry(sl)
 bench::mark(check = FALSE,
   sf = {c1 = sf::st_coordinates(sl)},
   sfheaders = {c1_new = sfheaders::sf_to_df(sl)}
+  # geos = {c1_geos = data.frame(geos::geos_x(sl_geos), geos::geos_y(sl_geos))}
 )
 waldo::compare(c1, c1_new)
 c1_new
 ```
 
 ```{r}
-bench::mark(check = FALSE,
+bench::mark(
   sf = {l1 = c1[, 3]},
   sfheaders = {l1_new = c1_new$sfg_id}
 )
 l1_new
 ```
 
-`kit` is 2x faster:
+`kit` is 3x faster at finding duplicates:
 
 ```{r}
 l1_start = duplicated(l1) # find the break points between lines
+l1_start_kit = kit::fduplicated(l1)
+identical(l1_start, l1_start_kit)
 l1_start = c(l1_start[2:length(l1)], FALSE)
-bench::mark(check = FALSE,
+bench::mark(
   old = {l1_start = c(duplicated(l1)[2:length(l1)], FALSE)},
-  new = {l1_start_new = c(!kit::fduplicated(l1_new))}
+  new = {l1_start_new = c(kit::fduplicated(l1)[2:length(l1)], FALSE)}
 )
 get_start_end = function(l1) {
   dups = kit::fduplicated(l1)
