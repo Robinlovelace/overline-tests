@@ -25,25 +25,25 @@ res = bench::mark(time_unit = "s",
 )
 ```
 
-    2024-01-24 00:50:25.932463 constructing segments
+    2024-09-03 01:06:23.359022 constructing segments
 
-    2024-01-24 00:50:26.773686 building geometry
+    2024-09-03 01:06:24.973027 building geometry
 
-    2024-01-24 00:50:26.972302 simplifying geometry
+    2024-09-03 01:06:25.410289 simplifying geometry
 
-    2024-01-24 00:50:26.972523 aggregating flows
+    2024-09-03 01:06:25.410728 aggregating flows
 
-    2024-01-24 00:50:27.212716 rejoining segments into linestrings
+    2024-09-03 01:06:25.887828 rejoining segments into linestrings
 
-    2024-01-24 00:50:30.133867 constructing segments
+    2024-09-03 01:06:32.101282 constructing segments
 
-    2024-01-24 00:50:30.843851 building geometry
+    2024-09-03 01:06:33.474338 building geometry
 
-    2024-01-24 00:50:31.032385 simplifying geometry
+    2024-09-03 01:06:33.823042 simplifying geometry
 
-    2024-01-24 00:50:31.0326 aggregating flows
+    2024-09-03 01:06:33.823446 aggregating flows
 
-    2024-01-24 00:50:31.197022 rejoining segments into linestrings
+    2024-09-03 01:06:34.099108 rejoining segments into linestrings
 
     Warning: Some expressions had a GC in every iteration; so filtering is
     disabled.
@@ -57,7 +57,7 @@ res |>
 
 | expression |   median | mem_alloc | routes_per_second |
 |:-----------|---------:|----------:|------------------:|
-| original   | 1.120444 |     213MB |          892.5036 |
+| original   | 2.119842 |     209MB |          471.7333 |
 
 <!-- <details> -->
 
@@ -159,8 +159,8 @@ bench::mark(check = FALSE,
     # A tibble: 2 × 6
       expression      min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 sf          20.78µs  23.83µs    39687.      384B     27.8
-    2 sfheaders    8.61µs   9.53µs   100085.      86KB     20.0
+    1 sf           49.2µs   51.1µs    18305.      384B     4.16
+    2 sfheaders    18.8µs   19.4µs    48501.    83.5KB     4.85
 
 ``` r
 waldo::compare(c1, c1_new)
@@ -191,8 +191,8 @@ bench::mark(check = FALSE,
     # A tibble: 2 × 6
       expression      min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 sf            382ns    476ns  1843788.        0B        0
-    2 sfheaders     435ns    461ns  1763858.        0B        0
+    1 sf            945ns    986ns   879125.        0B     87.9
+    2 sfheaders     946ns    983ns   972448.        0B      0  
 
 ``` r
 l1_new
@@ -214,8 +214,8 @@ bench::mark(check = FALSE,
     # A tibble: 2 × 6
       expression      min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 old          1.81µs   2.23µs   410423.        0B     41.0
-    2 new        770.09ns 822.01ns  1131931.      31KB      0  
+    1 old          4.62µs   4.88µs   200842.        0B        0
+    2 new          1.84µs   1.91µs   511285.    37.5KB        0
 
 ``` r
 get_start_end = function(l1) {
@@ -295,8 +295,8 @@ bench::mark(check = FALSE,
     # A tibble: 2 × 6
       expression      min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 old          4.52µs   5.99µs   150659.   111.5KB     45.2
-    2 new          5.17µs   6.07µs   150227.    35.9KB     30.1
+    1 old          11.9µs   12.6µs    76790.   111.3KB     7.68
+    2 new          12.3µs   12.9µs    74473.    35.7KB     7.45
 
 ``` r
 waldo::compare(c3, c3_new)
