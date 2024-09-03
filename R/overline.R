@@ -390,8 +390,9 @@ ol_grp <- function(sl, attrib){
 #'   )
 #' )
 #' attrib = "foot"
+#' overline3(sl, attrib)
 overline3 <-
-  function(sl, attrib, fun = "sum") {
+  function(sl, attrib, fun = "sum", simplify = TRUE, quiet = FALSE) {
     sln <- sl[, attrib]
     sl_crs <- sf::st_crs(sl)
     c1 <- sfheaders::sf_to_df(sln)
@@ -436,7 +437,8 @@ overline3 <-
     # )
 
     # With sfheaders:
-    res_geometry <- sfheaders::sf_linestring(coords, linestring_id = seq(nrow(coords)))
+    # res_geometry <- sfheaders::sf_linestring(coords, linestring_id = seq(nrow(coords)))
+    res_geometry = od::odc_to_sfc(coords)
     res_exploded = sf::st_as_sf(res_attributes, geometry = res_geometry)
 
     # Recombine into fewer lines
